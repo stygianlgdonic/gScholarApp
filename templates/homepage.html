@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <title>Home</title>
+</head>
+<body>
+<div class="container p-5">
+    <h1 class="text-center">Google Scholar Publications Search</h1>
+    <hr>
+
+    <form action="{% url 'results' %}" method="post">
+        <div class="form-group">
+            {% csrf_token %}
+            <label for="search">Search Title:</label>
+            <input type="text" name="search" id="search" class="form-control">
+        </div>
+        <button type="submit" class="btn btn-info" onclick="setGetParameter()">Submit</button>
+    </form>
+
+    <hr>
+    <div class="results">
+        {% if title %}
+            <h4>Title:</h4>
+            {{ title }}
+        {% endif %}
+
+        {% if author %}
+            <h4>Author(s):</h4>
+            {{ author }}
+        {% endif %}
+
+        {% if url %}
+            <h4>url:</h4>
+            <a href="{{ url }}">
+                {{ url }}
+            </a>
+        {% endif %}
+    </div>
+</div>
+
+
+<script>
+
+    function setGetParameter() {
+        {#var search_word = $("#search").val();#}
+        $.ajax({
+            type: "POST",
+            url: {% url 'results' %},
+            {#data: search_word#}
+        });
+    }
+</script>
+
+</body>
+</html>
